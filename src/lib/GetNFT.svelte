@@ -22,13 +22,10 @@
 		const baseURL = `https://${chain}.g.alchemy.com/v2/`;
 		const getNFTs = `/getNFTsForCollection/?contractAddress=`;
 		const options = `&withMetadata=true`;
-		console.log(`${baseURL}${apiKey}${getNFTs}${contract}${options}`);
 		let response = await fetch(`${baseURL}${apiKey}${getNFTs}${contract}${options}`);
-		// curl 'https://eth-mainnet.g.alchemy.com/v2/demo/getNFTsForCollection/?contractAddress=0x61fce80d72363b731425c3a2a46a1a5fed9814b2&startToken=0x1ea2&withMetadata=false'
 
 		data = await response.json();
 		nfts = data.nfts;
-		console.log(data.nfts);
 	}
 </script>
 
