@@ -1,5 +1,5 @@
 <script>
-	import GetNFT from '$lib/GetNFT.svelte';
+	import AlchemyLocal from '$lib/AlchemyLocal.svelte';
 </script>
 
-<GetNFT />
+<AlchemyLocal />
