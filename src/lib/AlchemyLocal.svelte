@@ -12,7 +12,7 @@
 	async function connectWallet() {
 		let apiKey = '';
 		switch (chain) {
-			case 'mumbai':
+			case 'maticmum':
 				apiKey = mumbaiApiKey;
 				break;
 			case 'goerli':
@@ -22,7 +22,7 @@
 				apiKey = rinkebyApiKey;
 				break;
 		}
-		const provider = new ethers.providers.AlchemyProvider(chain, goerliApiKey);
+		const provider = new ethers.providers.AlchemyProvider(chain, apiKey);
 
 		const contract = new ethers.Contract(contractAddr, NFTAbi.abi, provider);
 		let URI = await contract.tokenURI(tokenID);
@@ -44,7 +44,7 @@
 	<div class="w-full max-w-xs">
 		<select class="select select-bordered w-full max-w-xs" bind:value={chain}>
 			<option disabled selected value="">Select The Chain</option>
-			<option value="mumbai">Mumbai</option>
+			<option value="maticmum">Mumbai</option>
 			<option value="goerli">Goerli</option>
 			<option value="rinkeby">Rinkeby</option>
 		</select>
