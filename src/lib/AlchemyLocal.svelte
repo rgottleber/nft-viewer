@@ -1,25 +1,33 @@
 <script>
 	import { ethers } from 'ethers';
+	const mumbaiApiKey = import.meta.env.VITE_MUMBAI_API_KEY;
 	const goerliApiKey = import.meta.env.VITE_GOERLI_API_KEY;
+	const rinkebyApiKey = import.meta.env.VITE_RINKEBY_API_KEY;
 	import NFTAbi from '../contracts/NFT.json';
+	$: chain = '';
 	$: contractAddr = '';
 	$: data = '';
 	$: tokenID = '';
 	$: image = '';
 	async function connectWallet() {
-		const url = `https://eth-goerli.alchemyapi.io/v2/${goerliApiKey}`;
-		console.log(url);
-		const provider = new ethers.providers.AlchemyProvider('goerli', goerliApiKey);
+		let apiKey = '';
+		switch (chain) {
+			case 'mumbai':
+				apiKey = mumbaiApiKey;
+				break;
+			case 'goerli':
+				apiKey = goerliApiKey;
+				break;
+			case 'rinkeby':
+				apiKey = rinkebyApiKey;
+				break;
+		}
+		const provider = new ethers.providers.AlchemyProvider(chain, goerliApiKey);
 
-		console.log('here');
-		console.log(provider);
 		const contract = new ethers.Contract(contractAddr, NFTAbi.abi, provider);
-		let test = await contract.name();
-		console.log(test);
 		let URI = await contract.tokenURI(tokenID);
 		let json = await fetch(URI);
 		let tempData = await json.json();
-		console.log(data.image);
 		const preloadImage = (src) =>
 			new Promise((r) => {
 				image = new Image();
@@ -34,6 +42,12 @@
 
 <div class="flex flex-col items-center justify-center h-full">
 	<div class="w-full max-w-xs">
+		<select class="select select-bordered w-full max-w-xs" bind:value={chain}>
+			<option disabled selected value="">Select The Chain</option>
+			<option value="mumbai">Mumbai</option>
+			<option value="goerli">Goerli</option>
+			<option value="rinkeby">Rinkeby</option>
+		</select>
 		<input
 			type="text"
 			bind:value={contractAddr}
