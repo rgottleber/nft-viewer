@@ -10,6 +10,7 @@
 	$: tokenID = '';
 	$: image = '';
 	async function connectWallet() {
+		data = '';
 		let apiKey = '';
 		switch (chain) {
 			case 'maticmum':
@@ -42,7 +43,7 @@
 
 <div class="flex flex-col items-center justify-center h-full">
 	<div class="w-full max-w-xs">
-		<select class="select select-bordered w-full max-w-xs" bind:value={chain}>
+		<select class="my-4 select select-bordered w-full max-w-xs" bind:value={chain}>
 			<option disabled selected value="">Select The Chain</option>
 			<option value="maticmum">Mumbai</option>
 			<option value="goerli">Goerli</option>
@@ -51,26 +52,31 @@
 		<input
 			type="text"
 			bind:value={contractAddr}
-			class="input input-bordered w-full max-w-xs"
+			class="input input-bordered w-full max-w-xs my-4"
 			placeholder="Enter Contract Address"
 		/>
 		<input
 			type="text"
 			bind:value={tokenID}
-			class="input input-bordered w-full max-w-xs"
+			class="input input-bordered w-full max-w-xs my-4"
 			placeholder="Enter Token ID"
 		/>
 		<button on:click={connectWallet} class="btn">View NFT</button>
-		{#if data}
-			<div class="card w-80 h-96 bg-base-100 shadow-xl">
+	</div>
+	{#if data}
+		<div class="flex flex-col items-center justify-center h-full">
+			<div class="card bg-base-100 shadow-xl my-4 h-auto w-auto">
 				<figure class="px-10 pt-10 h-48">
-					<img src={image.src} alt={data.name} class="rounded-xl object-contain w-24 h-48" />
+					<img src={image.src} alt={data.name} class="rounded-xl object-contain w-36 h-48" />
 				</figure>
-				<div class="card-body items-center text-center">
-					<h2 class="card-title">{data.name}</h2>
-					<p>{data.description}</p>
+				<div class="card-body items-center">
+					<h2 class="card-title  text-center">{data.name}</h2>
+					<p class="text-center">{data.description}</p>
+					<pre class="overflow-auto">
+{JSON.stringify(data, null, 2)}
+					</pre>
 				</div>
 			</div>
-		{/if}
-	</div>
+		</div>
+	{/if}
 </div>
